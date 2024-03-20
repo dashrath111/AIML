@@ -23,6 +23,8 @@ for _ in range(100):
     # Fitting the model
 
     lr.fit(X_train, y_train)
+    y_preds = lr.predict(X_test)
+
     test_mse = mean_squared_error(y_test, lr.predict(X_test))
     average_mse = np.mean(test_mse)
     print(f'MSE Result: { test_mse}')
