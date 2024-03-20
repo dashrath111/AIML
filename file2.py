@@ -5,6 +5,8 @@ from sklearn.model_selection import train_test_split
 #import joblib
 #import neptune
 #from neptune.types import File
+import matplotlib.pyplot as plt
+
 import os
 
 lr = LinearRegression()
@@ -21,6 +23,8 @@ for _ in range(100):
     # Fitting the model
 
     lr.fit(X_train, y_train)
+    y_preds = lr.predict(X_test)
+
     test_mse = mean_squared_error(y_test, lr.predict(X_test))
     average_mse = np.mean(test_mse)
     print(f'MSE Result: { test_mse}')
@@ -28,4 +32,17 @@ for _ in range(100):
     # Write metrics to file
     with open('metrics.txt', 'w') as outfile:
         outfile.write(f'\n Mean Squared Error = {average_mse}.')
+# Plotting the training data
+plt.scatter(X_train, y_train, color='blue', label='Training data')
+# Plotting the testing data
+plt.scatter(X_test, y_test, color='red', label='Testing data')
+plt.scatter(X_test, y_preds, c="g", label="Predictions")
+  # Show the legend
+plt.xlabel('X')
+plt.ylabel('y')
+plt.title('Training and Testing Data Split')
+plt.legend()
+plt.grid(True)
+plt.savefig('model_results.png', dpi=120)
+
 
